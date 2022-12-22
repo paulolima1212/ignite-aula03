@@ -3,7 +3,7 @@ import styled, { css } from 'styled-components';
 export const TableContainer = styled.div`
   width: 100%;
   max-width: 70rem;
-  margin: 4rem auto 0;
+  margin: 0 auto;
   display: flex;
   justify-content: center;
 `;
