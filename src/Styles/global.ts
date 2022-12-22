@@ -36,10 +36,17 @@ footer, header, hgroup, menu, nav, section {
 body {
 	line-height: 160%;
  font-family: 'Roboto', sans-serif;
+	background: ${({ theme }) => theme.colors['gray-800']};
+	color: ${({ theme }) => theme.colors['gray-100']};
+	-webkit-font-smoothing: antialiased;
 }
 
 ol, ul {
 	list-style: none;
+}
+
+button{
+	cursor: pointer;
 }
 
 blockquote, q {
@@ -61,6 +68,8 @@ a{
  text-decoration: none;
 }
 
-
-
+:focus{
+	outline: 0;
+	box-shadow: 0 0 0 2px ${({ theme }) => theme.colors['green-500']};
+}
 `;
