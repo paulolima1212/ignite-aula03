@@ -2,7 +2,6 @@ import { ArrowCircleDown, ArrowCircleUp, X } from 'phosphor-react';
 import {
   CloseModalButton,
   Content,
-  NewTransactionModalContainer,
   Overlay,
   TransactionTypeButon,
   TransactionTypeContainer,

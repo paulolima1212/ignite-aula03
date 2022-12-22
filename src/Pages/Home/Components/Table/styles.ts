@@ -17,6 +17,7 @@ export const TableTrasactions = styled.table`
   td {
     padding: 1.25rem 2rem;
     background: ${({ theme }) => theme.colors['gray-700']};
+    font-size: 0.875rem;
 
     &:first-child {
       border-top-left-radius: 6px;

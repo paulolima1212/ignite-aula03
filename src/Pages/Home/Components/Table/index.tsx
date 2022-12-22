@@ -1,26 +1,28 @@
+import { useTransaction } from '../../../../Hooks/useTransactionContext';
+import { formatDate, formatMoney } from '../../../../Utils/formatter';
 import { PriceHighLight, TableContainer, TableTrasactions } from './styles';
 
 export function Table() {
+  const { transactions } = useTransaction();
+
   return (
     <TableContainer>
       <TableTrasactions>
         <tbody>
-          <tr>
-            <td width={'50%'}>Desenvolvimento de software</td>
-            <td>
-              <PriceHighLight variant='income'>12.000.00 €</PriceHighLight>
-            </td>
-            <td>Sale</td>
-            <td>12/12/2022</td>
-          </tr>
-          <tr>
-            <td width={'50%'}>Hamburger</td>
-            <td>
-              <PriceHighLight variant='outcome'>- 15.00 €</PriceHighLight>
-            </td>
-            <td>Food</td>
-            <td>12/12/2022</td>
-          </tr>
+          {transactions.map((transaction) => {
+            return (
+              <tr key={transaction.id}>
+                <td width={'50%'}>{transaction.description}</td>
+                <td>
+                  <PriceHighLight variant={transaction.type}>
+                    {formatMoney.format(transaction.price)}
+                  </PriceHighLight>
+                </td>
+                <td>{transaction.category}</td>
+                <td>{formatDate.format(new Date(transaction.createdAt))}</td>
+              </tr>
+            );
+          })}
         </tbody>
       </TableTrasactions>
     </TableContainer>
