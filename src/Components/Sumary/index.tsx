@@ -18,7 +18,7 @@ export function Sumary() {
         </header>
         <strong>17.400.00 €</strong>
       </SumaryCardContainer>
-      <SumaryCardContainer>
+      <SumaryCardContainer variant={'green'}>
         <header>
           <span>Sumary</span>
           <CurrencyEur size={32} color='#fff' />

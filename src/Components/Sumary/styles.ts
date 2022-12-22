@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
 export const SumaryContainer = styled.section`
   width: 100%;
@@ -16,10 +16,20 @@ export const SumaryContainer = styled.section`
   align-items: center;
 `;
 
-export const SumaryCardContainer = styled.div`
+interface SumaryCardContainerProps {
+  variant?: 'green' | null;
+}
+
+export const SumaryCardContainer = styled.div<SumaryCardContainerProps>`
   background: ${({ theme }) => theme.colors['gray-600']};
   border-radius: 6px;
   padding: 2rem;
+
+  ${({ theme, variant }) =>
+    variant === 'green' &&
+    css`
+      background: ${theme.colors['green-700']};
+    `};
 
   header {
     display: flex;
