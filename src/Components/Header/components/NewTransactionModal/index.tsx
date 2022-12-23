@@ -10,6 +10,7 @@ import * as Dialog from '@radix-ui/react-dialog';
 import * as z from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm, Controller } from 'react-hook-form';
+import { useTransaction } from '../../../../Hooks/useTransactionContext';
 
 enum TypeTransaction {
   income = 'income',
@@ -27,12 +28,16 @@ type NewTransactionForm = z.infer<typeof newTransactionFormSchema>;
 
 type DataNewTransactions = NewTransactionForm;
 
-export function NewTransactionModal<newTransactionFormSchema>() {
+export function NewTransactionModal() {
+  const { handlerCreateNewTransaction, handlerLoadTransactions } =
+    useTransaction();
+
   const {
     control,
     register,
     handleSubmit,
     formState: { isSubmitting },
+    reset,
   } = useForm<NewTransactionForm>({
     resolver: zodResolver(newTransactionFormSchema),
     defaultValues: {
@@ -41,7 +46,17 @@ export function NewTransactionModal<newTransactionFormSchema>() {
   });
 
   function handleCreateNewTransaction(data: DataNewTransactions) {
-    console.log(data);
+    const { category, description, price, type } = data;
+    const newTransaction = {
+      category,
+      description,
+      price,
+      type,
+      createdAt: String(new Date()),
+    };
+
+    handlerCreateNewTransaction(newTransaction);
+    reset();
   }
 
   return (

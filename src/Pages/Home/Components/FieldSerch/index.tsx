@@ -7,6 +7,7 @@ import {
 import { useForm } from 'react-hook-form';
 import * as z from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { useTransaction } from '../../../../Hooks/useTransactionContext';
 
 const searchFormSchema = z.object({
   query: z.string(),
@@ -15,6 +16,8 @@ const searchFormSchema = z.object({
 type SearchFormSchema = z.infer<typeof searchFormSchema>;
 
 export function FieldSerch() {
+  const { handlerLoadTransactions } = useTransaction();
+
   const {
     register,
     handleSubmit,
@@ -23,8 +26,8 @@ export function FieldSerch() {
     resolver: zodResolver(searchFormSchema),
   });
 
-  function handleSearchSumit(data: SearchFormSchema) {
-    console.log(data);
+  async function handleSearchSumit(data: SearchFormSchema) {
+    handlerLoadTransactions(data.query);
   }
 
   return (

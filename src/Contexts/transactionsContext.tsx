@@ -1,12 +1,15 @@
 import { ReactNode, createContext, useEffect, useState } from 'react';
-import { getTransaction } from '../Services/http/gets/getTransactions';
+import { getTransactions } from '../Services/http/gets/getTransactions';
+import { createNewTransaction } from '../Services/http/sets/createNewTransaction';
 
 interface TransactionsContextProps {
   transactions: TransactionsProps[];
+  handlerLoadTransactions: (query?: string) => void;
+  handlerCreateNewTransaction: (data: TransactionsProps) => void;
 }
 
 export interface TransactionsProps {
-  id: number;
+  id?: number;
   description: string;
   type: 'income' | 'outcome';
   price: number;
@@ -25,17 +28,28 @@ export function TransactionsContextProvider({
 }) {
   const [transactions, setTransactions] = useState<TransactionsProps[]>([]);
 
-  async function getNewTransaction() {
-    const data = await getTransaction();
+  async function handlerLoadTransactions(query?: string) {
+    const data = await getTransactions(query);
     setTransactions(data);
   }
 
+  async function handlerCreateNewTransaction(data: TransactionsProps) {
+    const newTransaction = await createNewTransaction(data);
+    setTransactions((prev) => [newTransaction, ...prev]);
+  }
+
   useEffect(() => {
-    getNewTransaction();
+    handlerLoadTransactions('');
   }, []);
 
   return (
-    <TransactionsContext.Provider value={{ transactions }}>
+    <TransactionsContext.Provider
+      value={{
+        transactions,
+        handlerLoadTransactions,
+        handlerCreateNewTransaction,
+      }}
+    >
       {children}
     </TransactionsContext.Provider>
   );
